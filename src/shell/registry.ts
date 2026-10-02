@@ -28,10 +28,12 @@ export const navGroups: NavGroup[] = [
   { area: 'modules', label: 'Modules', manifests: modules },
 ];
 
-function findPermission(items: NavItem[], route: string): string | undefined {
+// A nav item's permission applies to its children unless they declare their own.
+function findPermission(items: NavItem[], route: string, inherited?: string): string | undefined {
   for (const item of items) {
-    if (item.route === route) return item.permission;
-    const nested = item.children && findPermission(item.children, route);
+    const permission = item.permission ?? inherited;
+    if (item.route === route) return permission;
+    const nested = item.children && findPermission(item.children, route, permission);
     if (nested) return nested;
   }
   return undefined;

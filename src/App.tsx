@@ -4,10 +4,19 @@ import type { AppPage } from './components/layout/AppSidebar';
 import { routeTable } from './shell/registry';
 import { defaultRoute } from './shell/nav';
 import { can, tenants } from './shell/session';
+import { PlatformConfigProvider } from './stores/PlatformConfigContext';
 
 const readHash = () => decodeURIComponent(window.location.hash.replace(/^#\/?/, ''));
 
 export default function App() {
+  return (
+    <PlatformConfigProvider>
+      <AppInner />
+    </PlatformConfigProvider>
+  );
+}
+
+function AppInner() {
   const [currentPage, setCurrentPage] = useState<AppPage>(() => readHash() || defaultRoute);
 
   useEffect(() => {

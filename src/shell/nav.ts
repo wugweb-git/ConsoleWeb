@@ -17,10 +17,13 @@ export interface SidebarSection {
   items: SidebarItem[];
 }
 
-const flatten = (area: Area, m: ModuleManifest, items: NavItem[]): { id: string; label: string }[] =>
+const flatten = (area: Area, m: ModuleManifest, items: NavItem[], inherited?: string): { id: string; label: string }[] =>
   items
-    .filter(i => can(i.permission))
-    .flatMap(i => [{ id: routeKey(area, m.id, i.route), label: i.label }, ...flatten(area, m, i.children ?? [])]);
+    .filter(i => can(i.permission ?? inherited))
+    .flatMap(i => [
+      { id: routeKey(area, m.id, i.route), label: i.label },
+      ...flatten(area, m, i.children ?? [], i.permission ?? inherited),
+    ]);
 
 // One sidebar item per manifest, its nav items as children.
 const manifestItem = (area: Area, m: ModuleManifest, items: NavItem[]): SidebarItem | null => {
@@ -34,7 +37,7 @@ const platformItems = (m: ModuleManifest): SidebarItem[] =>
   m.nav
     .filter(i => can(i.permission))
     .map(i => {
-      const children = flatten('shell', m, i.children ?? []);
+      const children = flatten('shell', m, i.children ?? [], i.permission);
       return {
         id: routeKey('shell', m.id, i.route),
         label: i.label,
