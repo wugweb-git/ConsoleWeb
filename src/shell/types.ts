@@ -19,6 +19,7 @@ export type Screen = ComponentType<ScreenContext>;
 export interface NavItem {
   label: string;
   route: string;           // key into `routes`
+  icon?: ModuleManifest['icon']; // used for top-level platform items
   permission?: string;     // one of the manifest's `permissions`
   children?: NavItem[];
 }
