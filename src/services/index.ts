@@ -4,6 +4,7 @@ import { loadManifests } from '../shell/loadManifests';
 // Shared capabilities (blockchain, templates, ...), one line each.
 const registered: string[] = [
   'blockchain',
+  'templates',
 ];
 
 export const services: ModuleManifest[] = loadManifests(

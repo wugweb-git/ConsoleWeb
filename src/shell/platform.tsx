@@ -1,10 +1,11 @@
-import { LayoutGrid, Users, Code, Wrench } from 'lucide-react';
+import { LayoutGrid, Users, Layers, Code, Wrench } from 'lucide-react';
 import { defineModule } from './types';
 import { usePlatformConfig } from '../stores/PlatformConfigContext';
 import { UserManagement } from '../components/admin/UserManagement';
 import { PlatformConfig } from '../components/admin/PlatformConfig';
 import { AdminIntegrations } from '../components/admin/AdminIntegrations';
 import { DeveloperPortal } from '../components/platform/DeveloperPortal';
+import { InvoiceTemplatesScreen } from '../services/templates/screens';
 
 // The shell's own platform screens. Generic across products.
 
@@ -28,6 +29,10 @@ export const platform = defineModule({
         { label: 'Activity Log', route: 'users-activity' },
       ],
     },
+    {
+      label: 'Templates', route: 'invoices', icon: Layers, permission: 'platform.templates',
+      children: [{ label: 'Invoice', route: 'invoices' }],
+    },
     { label: 'Developer Portal', route: 'developer', icon: Code, permission: 'platform.developer' },
     {
       label: 'Platform Config', route: 'config', icon: Wrench, permission: 'platform.config',
@@ -43,9 +48,10 @@ export const platform = defineModule({
     'users-teams': () => <UserManagement initialTab="teams" />,
     'users-roles': () => <UserManagement initialTab="roles" />,
     'users-activity': () => <UserManagement initialTab="activity" />,
+    'invoices': InvoiceTemplatesScreen,
     'developer': DeveloperPortal,
     'config': PlatformConfigScreen,
     'integrations': AdminIntegrations,
   },
-  permissions: ['platform.users', 'platform.developer', 'platform.config'],
+  permissions: ['platform.users', 'platform.templates', 'platform.developer', 'platform.config'],
 });

@@ -48,6 +48,7 @@
         '@radix-ui/react-alert-dialog@1.1.6': '@radix-ui/react-alert-dialog',
         '@radix-ui/react-accordion@1.2.3': '@radix-ui/react-accordion',
         'figma:asset/c89b9883696b2665a7b45df31e52fdcf283cb1d3.png': path.resolve(__dirname, './src/assets/c89b9883696b2665a7b45df31e52fdcf283cb1d3.png'),
+        'figma:asset/7de6133843694918a5900b99657d56c8994d2640.png': path.resolve(__dirname, './src/assets/7de6133843694918a5900b99657d56c8994d2640.png'),
         '@': path.resolve(__dirname, './src'),
       },
     },
