@@ -25,11 +25,17 @@ const flatten = (area: Area, m: ModuleManifest, items: NavItem[], inherited?: st
       ...flatten(area, m, i.children ?? [], i.permission ?? inherited),
     ]);
 
-// One sidebar item per manifest, its nav items as children.
-const manifestItem = (area: Area, m: ModuleManifest, items: NavItem[]): SidebarItem | null => {
-  const children = flatten(area, m, items);
-  if (children.length === 0) return null;
-  return { id: children[0].id, label: m.name, icon: m.icon, children };
+// One sidebar item per manifest with its leaf nav items as children.
+// A top-level nav item that has children becomes its own sidebar item (a nav group).
+const manifestItems = (area: Area, m: ModuleManifest, items: NavItem[]): SidebarItem[] => {
+  const result: SidebarItem[] = [];
+  const leaves = flatten(area, m, items.filter(i => !i.children?.length));
+  if (leaves.length > 0) result.push({ id: leaves[0].id, label: m.name, icon: m.icon, children: leaves });
+  for (const group of items.filter(i => i.children?.length && can(i.permission))) {
+    const children = flatten(area, m, group.children!, group.permission);
+    if (children.length > 0) result.push({ id: children[0].id, label: group.label, icon: group.icon ?? m.icon, children });
+  }
+  return result;
 };
 
 // Shell: the platform manifest's own nav items are top-level items.
@@ -52,13 +58,12 @@ export const sidebarSections: SidebarSection[] = [
     items:
       g.area === 'shell'
         ? g.manifests.flatMap(platformItems)
-        : g.manifests.map(m => manifestItem(g.area, m, m.nav)).filter((x): x is SidebarItem => x !== null),
+        : g.manifests.flatMap(m => manifestItems(g.area, m, m.nav)),
   })),
   {
     label: 'Settings',
     items: settingsManifests
-      .map(m => manifestItem('settings', m, m.settings!.map(s => ({ label: s.label, route: s.route, permission: s.permission }))))
-      .filter((x): x is SidebarItem => x !== null),
+      .flatMap(m => manifestItems('settings', m, m.settings!.map(s => ({ label: s.label, route: s.route, permission: s.permission })))),
   },
 ].filter(s => s.items.length > 0);
 

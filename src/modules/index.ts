@@ -5,6 +5,7 @@ import { loadManifests } from '../shell/loadManifests';
 const registered: string[] = [
   '_example',
   'docweb',
+  'stayweb',
 ];
 
 export const modules: ModuleManifest[] = loadManifests(
