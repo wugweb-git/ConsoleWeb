@@ -61,3 +61,20 @@ export const sidebarSections: SidebarSection[] = [
 
 export const defaultRoute: string =
   sidebarSections[0]?.items[0]?.children?.[0]?.id ?? sidebarSections[0]?.items[0]?.id ?? '';
+
+// Breadcrumb trails (Breadcrumbs shape): section › item › child.
+export const breadcrumbTrails: Record<string, { label: string; page?: string }[]> = {};
+
+for (const section of sidebarSections) {
+  for (const item of section.items) {
+    breadcrumbTrails[item.id] = [{ label: section.label }, { label: item.label }];
+    for (const child of item.children ?? []) {
+      if (child.id === item.id) continue;
+      breadcrumbTrails[child.id] = [{ label: section.label }, { label: item.label, page: item.id }, { label: child.label }];
+    }
+  }
+}
+
+// First route under the Settings section, if any manifest registers settings.
+export const settingsRoute: string | null =
+  sidebarSections.find(s => s.label === 'Settings')?.items[0]?.id ?? null;

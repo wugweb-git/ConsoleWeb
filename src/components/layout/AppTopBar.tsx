@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Search, LogOut, Settings, HelpCircle, X, Menu } from 'lucide-react';
 import type { AppPage } from './AppSidebar';
 import { Breadcrumbs } from './Breadcrumbs';
+import { defaultRoute, settingsRoute } from '../../shell/nav';
 import svgPaths from '../../imports/svg-k4fsktm66r';
 import imgAvatar from "figma:asset/c89b9883696b2665a7b45df31e52fdcf283cb1d3.png";
 
@@ -57,7 +58,7 @@ export function AppTopBar({ currentPage, onNavigate, onToggleSidebar }: AppTopBa
         )}
         <div
           className="h-[25px] w-[119px] shrink-0 cursor-pointer"
-          onClick={() => onNavigate('dashboard')}
+          onClick={() => onNavigate(defaultRoute)}
         >
           <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 119 25">
             <g>
@@ -279,7 +280,7 @@ export function AppTopBar({ currentPage, onNavigate, onToggleSidebar }: AppTopBa
                 <span style={{ color: 'var(--muted-foreground)' }}>admin@wugweb.com</span>
               </div>
               {[
-                { icon: Settings, label: 'Settings', page: 'settings' as AppPage },
+                { icon: Settings, label: 'Settings', page: settingsRoute as AppPage | null },
                 { icon: HelpCircle, label: 'Help & Support', page: null },
               ].map((item, i) => {
                 const Icon = item.icon;
