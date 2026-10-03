@@ -16,6 +16,8 @@ export default defineModule({
     crud: AdminCRUD,
   },
   permissions: ['docweb.schema.view', 'docweb.crud.manage'],
+  // Mock data until the DocWeb admin API exists (DB credentials never go in the browser).
+  backend: { kind: 'mock', env: [], optional: true },
   // TODO: Phase 2 data layer (src/modules/docweb/data-layer/), every function takes tenantId.
   data: {},
 });

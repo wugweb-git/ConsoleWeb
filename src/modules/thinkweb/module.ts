@@ -15,5 +15,12 @@ export default defineModule({
   ],
   routes,
   permissions: ['thinkweb.admin', 'thinkweb.dev'],
+  backend: {
+    kind: 'supabase',
+    env: ['VITE_THINKWEB_SUPABASE_URL', 'VITE_THINKWEB_SUPABASE_ANON_KEY'],
+  },
+  // Some screens use React Router; their paths (e.g. /doc/:id) have no ConsoleWeb route.
+  navigation: { kind: 'react-router', map: () => null },
+  styles: () => import('./styles/thinkweb.css'),
   data: {},
 });

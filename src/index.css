@@ -2,5 +2,3 @@
 @source './**/*.{js,ts,jsx,tsx}';
 @import 'tw-animate-css';
 @import './styles/globals.css';
-@import './modules/stayweb/styles/stayweb.css';
-@import './modules/thinkweb/styles/thinkweb.css';

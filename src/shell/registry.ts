@@ -67,3 +67,8 @@ export const settingsManifests = navGroups
   .filter(m => m.settings && m.settings.length > 0);
 
 export const products = modules;
+
+// Module and service CSS, declared in each manifest and loaded by the shell.
+for (const group of navGroups) {
+  for (const manifest of group.manifests) void manifest.styles?.();
+}

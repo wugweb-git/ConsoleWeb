@@ -17,7 +17,7 @@ export interface GoogleAuthResponse {
 
 class GoogleIntegrationService {
   private accessToken: string | null = null;
-  private readonly CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  private readonly CLIENT_ID = import.meta.env.VITE_THINKWEB_GOOGLE_CLIENT_ID;
   private readonly DISCOVERY_DOCS = [
     'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
     'https://www.googleapis.com/discovery/v1/apis/docs/v1/rest',

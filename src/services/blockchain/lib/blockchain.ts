@@ -8,8 +8,8 @@
 // Production: Move API key to environment variables / secrets manager.
 // ============================================================================
 
-// Set VITE_ALCHEMY_ENDPOINT in .env.local (never commit it).
-const ALCHEMY_ENDPOINT: string = import.meta.env.VITE_ALCHEMY_ENDPOINT ?? '';
+// Set VITE_BLOCKCHAIN_ALCHEMY_ENDPOINT in .env.local (never commit it).
+const ALCHEMY_ENDPOINT: string = import.meta.env.VITE_BLOCKCHAIN_ALCHEMY_ENDPOINT ?? '';
 
 export { ALCHEMY_ENDPOINT };
 // ────────────────────────────────────────────

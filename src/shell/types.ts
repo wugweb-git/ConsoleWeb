@@ -11,7 +11,8 @@ import type { ComponentType } from 'react';
 export interface ScreenContext {
   productId: string | null;
   tenantId: string;
-  navigate: (route: string) => void;
+  navigate: (route: string) => void;   // full shell route key
+  onNavigate: (path: string) => void;  // module's own path, mapped by its `navigation`
 }
 
 export type Screen = ComponentType<ScreenContext>;
@@ -31,6 +32,21 @@ export interface SettingsScreen {
   component: Screen;
 }
 
+// Backend the module talks to. Env names follow VITE_<MODULE>_*.
+// Clients are created lazily (see shell/lazy.ts). If a required env var is
+// missing, the shell shows an error state on that module's screens only.
+export interface ModuleBackend {
+  kind: 'supabase' | 'libsql' | 'rpc' | 'mock';
+  env: string[];        // required env var names
+  optional?: boolean;   // module still works without it (e.g. mock fallback)
+}
+
+// For screens that navigate with their own paths (onNavigate or React Router).
+export interface ModuleNavigation {
+  kind: 'callback' | 'react-router';
+  map?: (path: string) => string | null;  // module path -> module route, null = stay
+}
+
 // Data-layer functions. The first argument is always the tenant.
 export type DataFn = (tenantId: string, ...args: any[]) => unknown;
 
@@ -43,6 +59,9 @@ export interface ModuleManifest {
   permissions: string[];
   data?: Record<string, DataFn>;
   settings?: SettingsScreen[];
+  backend?: ModuleBackend;
+  navigation?: ModuleNavigation;
+  styles?: () => Promise<unknown>;   // module CSS, loaded by the shell
 }
 
 export function defineModule(manifest: ModuleManifest): ModuleManifest {

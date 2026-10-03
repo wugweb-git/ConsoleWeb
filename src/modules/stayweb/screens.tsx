@@ -20,8 +20,6 @@ import { SchemaViewer } from './components/SchemaViewer';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { useState } from 'react';
 
-const go = (navigate: ScreenContext['navigate']) => (route: string) => navigate(`modules/stayweb/${route}`);
-
 // System Core (SuperAdminView) sections
 const consoleScreen = (render: (ctx: ScreenContext) => React.ReactNode) =>
   (ctx: ScreenContext) => <StaywebScope variant="console">{render(ctx)}</StaywebScope>;
@@ -41,7 +39,7 @@ export const configTabs: ConfigTab[] = [
 ];
 
 export const routes = {
-  'dashboard': consoleScreen(ctx => <StaywebDashboard go={go(ctx.navigate)} />),
+  'dashboard': consoleScreen(ctx => <StaywebDashboard go={ctx.onNavigate} />),
   'properties': consoleScreen(() => <AdminPropertiesPage />),
   'communication': consoleScreen(() => <AdminCommunicationSettingsPage />),
   'ota-simulator': consoleScreen(() => <OTAWebhookSimulator />),
@@ -56,16 +54,16 @@ export const routes = {
   ])),
   'config-diagnostic': propertyScreen(ctx => (
     <ErrorBoundary name="ConfigDiagnostic">
-    {/* onNavigate targeted Stayweb property pages, which are not in ConsoleWeb */}
-    <PlatformConfigDiagnostic onBack={() => go(ctx.navigate)('dashboard')} onNavigate={() => {}} />
+    {/* Property pages it links to are not in ConsoleWeb; unmapped paths stay put */}
+    <PlatformConfigDiagnostic onBack={() => ctx.onNavigate('dashboard')} onNavigate={ctx.onNavigate} />
     </ErrorBoundary>
   )),
   // Dev pages
-  'prototype-demo': propertyScreen(ctx => <PrototypeDemoPage onBack={() => go(ctx.navigate)('dashboard')} />),
-  'sitemap': propertyScreen(ctx => <SystemSitemapPage onBack={() => go(ctx.navigate)('dashboard')} />),
-  'navigation-guide': propertyScreen(ctx => <NavigationGuidePage onBack={() => go(ctx.navigate)('dashboard')} />),
-  'component-specs': propertyScreen(ctx => <DesignSystemPage onBack={() => go(ctx.navigate)('dashboard')} />),
-  'ui-kit': propertyScreen(ctx => <DesignSystemPage onBack={() => go(ctx.navigate)('dashboard')} />),
-  'demo': propertyScreen(ctx => <AddRoomDemo onClose={() => go(ctx.navigate)('dashboard')} />),
+  'prototype-demo': propertyScreen(ctx => <PrototypeDemoPage onBack={() => ctx.onNavigate('dashboard')} />),
+  'sitemap': propertyScreen(ctx => <SystemSitemapPage onBack={() => ctx.onNavigate('dashboard')} />),
+  'navigation-guide': propertyScreen(ctx => <NavigationGuidePage onBack={() => ctx.onNavigate('dashboard')} />),
+  'component-specs': propertyScreen(ctx => <DesignSystemPage onBack={() => ctx.onNavigate('dashboard')} />),
+  'ui-kit': propertyScreen(ctx => <DesignSystemPage onBack={() => ctx.onNavigate('dashboard')} />),
+  'demo': propertyScreen(ctx => <AddRoomDemo onClose={() => ctx.onNavigate('dashboard')} />),
   'schema': propertyScreen(() => <SchemaViewer />),
 };

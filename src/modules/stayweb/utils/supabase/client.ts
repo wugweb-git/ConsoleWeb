@@ -1,5 +1,6 @@
 // TODO: replace with Stayweb admin API
 import { createClient } from '@supabase/supabase-js';
+import { lazy } from '../../../../shell/lazy';
 import { projectId, publicAnonKey } from './info';
 
 // ─── Custom in-memory lock to replace navigator.locks ───
@@ -49,13 +50,18 @@ async function inMemoryLock<R>(
   }
 }
 
-export const supabase = createClient(`https://${projectId}.supabase.co`, publicAnonKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-    lock: inMemoryLock,
-  }
+// Created on first use (shell/lazy), so importing Stayweb never connects or throws.
+export const supabase = lazy(() => {
+  const client = createClient(`https://${projectId}.supabase.co`, publicAnonKey, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      lock: inMemoryLock,
+    }
+  });
+  prewarmServer();
+  return client;
 });
 
 // ─── Deduplicated session initializer ───
@@ -99,5 +105,4 @@ export function prewarmServer() {
   fetch(PREWARM_URL, { method: 'GET' }).catch(() => {});
 }
 
-// Auto-prewarm on import
-prewarmServer();
+// Prewarm now runs when the client is first created (see `supabase` above), not on import.

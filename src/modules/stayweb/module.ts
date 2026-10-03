@@ -34,6 +34,13 @@ export default defineModule({
   ],
   routes,
   permissions: ['stayweb.console', 'stayweb.dev'],
+  backend: {
+    kind: 'supabase',
+    env: ['VITE_STAYWEB_SUPABASE_PROJECT_ID', 'VITE_STAYWEB_SUPABASE_ANON_KEY'],
+  },
+  // Stayweb screens call onNavigate/onBack with page ids; known ones map to module routes.
+  navigation: { kind: 'callback', map: path => (path.replace(/^\//, '') in routes ? path.replace(/^\//, '') : null) },
+  styles: () => import('./styles/stayweb.css'),
   // TODO: Phase 2 data layer; Supabase server functions stay in Stayweb.
   data: {},
 });

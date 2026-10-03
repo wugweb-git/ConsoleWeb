@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AppLayout } from './components/layout/AppLayout';
 import type { AppPage } from './components/layout/AppSidebar';
-import { routeTable } from './shell/registry';
+import { routeKey, routeTable } from './shell/registry';
+import { ModuleBoundary } from './shell/ModuleBoundary';
+import { RouteAdapter } from './shell/RouteAdapter';
 import { defaultRoute } from './shell/nav';
 import { can, tenants } from './shell/session';
 import { PlatformConfigProvider } from './stores/PlatformConfigContext';
@@ -35,9 +37,22 @@ function AppInner() {
   // TODO: product + tenant switchers (placeholders until a switcher UI is approved)
   const productId = resolved?.area === 'modules' ? resolved.manifest.id : null;
 
+  // Module paths (onNavigate / React Router) mapped to this module's routes.
+  const goModule = (route: string) => resolved && navigate(routeKey(resolved.area, resolved.manifest.id, route));
+  const onNavigate = (path: string) => {
+    const route = resolved?.manifest.navigation?.map?.(path);
+    if (route) goModule(route);
+  };
+
   return (
     <AppLayout currentPage={currentPage} onNavigate={navigate}>
-      {Screen && <Screen productId={productId} tenantId={tenants[0].id} navigate={navigate} />}
+      {Screen && resolved && (
+        <ModuleBoundary manifest={resolved.manifest}>
+          <RouteAdapter manifest={resolved.manifest} go={goModule}>
+            <Screen productId={productId} tenantId={tenants[0].id} navigate={navigate} onNavigate={onNavigate} />
+          </RouteAdapter>
+        </ModuleBoundary>
+      )}
     </AppLayout>
   );
 }
