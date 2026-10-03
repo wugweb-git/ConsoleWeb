@@ -86,7 +86,7 @@ function countEnabled(config: TenantModuleConfig | null): { modules: number; fea
   return { modules, features, total };
 }
 
-const BASE_URL = `https://${projectId}.supabase.co/functions/v1/make-server-ead79e26`;
+const BASE_URL = `https://${projectId}.supabase.co/functions/v1/stayweb-api`;
 
 async function getSuperAdminToken(): Promise<string | null> {
   try {

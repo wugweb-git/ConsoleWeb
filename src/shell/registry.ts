@@ -68,7 +68,5 @@ export const settingsManifests = navGroups
 
 export const products = modules;
 
-// Module and service CSS, declared in each manifest and loaded by the shell.
-for (const group of navGroups) {
-  for (const manifest of group.manifests) void manifest.styles?.();
-}
+// Module and service CSS is declared in each manifest and loaded by ModuleBoundary the first
+// time one of that module's screens opens, so it can't restyle the sign-in or platform screens.

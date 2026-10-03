@@ -3,7 +3,7 @@ import { supabase } from '../../utils/supabase/client';
 import { projectId } from '../../utils/supabase/info';
 import { toast } from 'sonner@2.0.3';
 
-const API_URL = `https://${projectId}.supabase.co/functions/v1/make-server-ead79e26`;
+const API_URL = `https://${projectId}.supabase.co/functions/v1/stayweb-api`;
 
 export interface ApiError {
   message: string;

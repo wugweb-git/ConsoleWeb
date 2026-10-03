@@ -34,7 +34,7 @@ function getStoredAuthToken(): string | null {
   }
 }
 
-const API_URL = `https://${projectId}.supabase.co/functions/v1/make-server-ead79e26`;
+const API_URL = `https://${projectId}.supabase.co/functions/v1/stayweb-api`;
 
 async function dbFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const authToken = getStoredAuthToken();

@@ -111,7 +111,7 @@ export function OTAWebhookSimulator() {
         if (!session?.access_token) return;
 
         const res = await fetch(
-          `https://${projectId}.supabase.co/functions/v1/make-server-ead79e26/super-admin/tenants`,
+          `https://${projectId}.supabase.co/functions/v1/stayweb-api/super-admin/tenants`,
           { headers: { Authorization: `Bearer ${session.access_token}` } }
         );
         if (res.ok) {
@@ -164,7 +164,7 @@ export function OTAWebhookSimulator() {
       }
 
       const res = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-ead79e26/super-admin/ota-simulate`,
+        `https://${projectId}.supabase.co/functions/v1/stayweb-api/super-admin/ota-simulate`,
         {
           method: 'POST',
           headers: {

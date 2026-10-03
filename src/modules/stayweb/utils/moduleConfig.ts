@@ -484,7 +484,7 @@ export function useMyModuleConfig(): {
       if (!token) { setLoading(false); return; }
 
       const res = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-ead79e26/my-modules`,
+        `https://${projectId}.supabase.co/functions/v1/stayweb-api/my-modules`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

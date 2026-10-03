@@ -7,10 +7,26 @@ import { RouteAdapter } from './shell/RouteAdapter';
 import { defaultRoute } from './shell/nav';
 import { can, tenants } from './shell/session';
 import { PlatformConfigProvider } from './stores/PlatformConfigContext';
+import { AuthProvider, useAuth } from './shell/auth/auth';
+import { LoginScreen, SetPasswordScreen, NoAccessScreen } from './shell/auth/AuthScreens';
 
 const readHash = () => decodeURIComponent(window.location.hash.replace(/^#\/?/, ''));
 
 export default function App() {
+  return (
+    <AuthProvider>
+      <SignInGate />
+    </AuthProvider>
+  );
+}
+
+// Only platform owners get past this point (see shell/auth/auth.tsx).
+function SignInGate() {
+  const auth = useAuth();
+  if (auth.loading) return <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }} />;
+  if (auth.session && auth.needsPassword) return <SetPasswordScreen email={auth.email} onDone={auth.passwordSet} />;
+  if (!auth.session) return <LoginScreen />;
+  if (!auth.isOwner) return <NoAccessScreen email={auth.email} onSignOut={auth.signOut} />;
   return (
     <PlatformConfigProvider>
       <AppInner />

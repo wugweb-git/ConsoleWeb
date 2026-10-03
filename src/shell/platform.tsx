@@ -1,7 +1,8 @@
-import { LayoutGrid, Users, Layers, Code, Wrench } from 'lucide-react';
+import { LayoutGrid, Users, Layers, Code, Wrench, UserCheck } from 'lucide-react';
 import { defineModule } from './types';
 import { usePlatformConfig } from '../stores/PlatformConfigContext';
 import { UserManagement } from '../components/admin/UserManagement';
+import { SignupApprovals } from '../components/admin/SignupApprovals';
 import { PlatformConfig } from '../components/admin/PlatformConfig';
 import { AdminIntegrations } from '../components/admin/AdminIntegrations';
 import { DeveloperPortal } from '../components/platform/DeveloperPortal';
@@ -19,6 +20,7 @@ export const platform = defineModule({
   name: 'Platform',
   icon: LayoutGrid,
   nav: [
+    { label: 'Sign-ups', route: 'signups', icon: UserCheck, permission: 'platform.users' },
     {
       label: 'User Management', route: 'users', icon: Users, permission: 'platform.users',
       children: [
@@ -43,6 +45,7 @@ export const platform = defineModule({
     },
   ],
   routes: {
+    'signups': SignupApprovals,
     'users': () => <UserManagement initialTab="overview" />,
     'users-orgs': () => <UserManagement initialTab="orgs" />,
     'users-teams': () => <UserManagement initialTab="teams" />,

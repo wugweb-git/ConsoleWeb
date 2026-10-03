@@ -36,7 +36,8 @@ export default defineModule({
   permissions: ['stayweb.console', 'stayweb.dev'],
   backend: {
     kind: 'supabase',
-    env: ['VITE_STAYWEB_SUPABASE_PROJECT_ID', 'VITE_STAYWEB_SUPABASE_ANON_KEY'],
+    // Shared wugweb-x project (VITE_STAYWEB_* still override, if set).
+    env: ['VITE_SUPABASE_PROJECT_ID', 'VITE_SUPABASE_PUBLISHABLE_KEY'],
   },
   // Stayweb screens call onNavigate/onBack with page ids; known ones map to module routes.
   navigation: { kind: 'callback', map: path => (path.replace(/^\//, '') in routes ? path.replace(/^\//, '') : null) },

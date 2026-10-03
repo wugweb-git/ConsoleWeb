@@ -96,7 +96,7 @@ export function resetSessionCache() {
 // Fire-and-forget ping to the /health endpoint on module load.
 // This triggers the Edge Function cold start BEFORE auth + batch-sync,
 // so by the time the real request fires, the Deno runtime is already warm.
-const PREWARM_URL = `https://${projectId}.supabase.co/functions/v1/make-server-ead79e26/health`;
+const PREWARM_URL = `https://${projectId}.supabase.co/functions/v1/stayweb-api/health`;
 let _prewarmDone = false;
 
 export function prewarmServer() {

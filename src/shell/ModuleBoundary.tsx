@@ -23,6 +23,8 @@ class Boundary extends Component<{ name: string; children: ReactNode }, { error:
 }
 
 export function ModuleBoundary({ manifest, children }: { manifest: ModuleManifest; children: ReactNode }) {
+  // Load this module's CSS on first use (dynamic imports run once).
+  void manifest.styles?.();
   const missing = missingEnv(manifest);
   if (missing.length > 0) {
     return (

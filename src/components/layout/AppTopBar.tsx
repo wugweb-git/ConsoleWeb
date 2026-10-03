@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Search, LogOut, Settings, HelpCircle, X, Menu } from 'lucide-react';
 import type { AppPage } from './AppSidebar';
 import { Breadcrumbs } from './Breadcrumbs';
+import { useAuth } from '../../shell/auth/auth';
 import { defaultRoute, settingsRoute } from '../../shell/nav';
 import svgPaths from '../../imports/svg-k4fsktm66r';
 import imgAvatar from "figma:asset/c89b9883696b2665a7b45df31e52fdcf283cb1d3.png";
@@ -16,6 +17,8 @@ export function AppTopBar({ currentPage, onNavigate, onToggleSidebar }: AppTopBa
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const auth = useAuth();
+  const displayName = auth.name ?? auth.email ?? '';
   const [notifOpen, setNotifOpen] = useState(false);
   const userRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
@@ -238,7 +241,7 @@ export function AppTopBar({ currentPage, onNavigate, onToggleSidebar }: AppTopBa
                   lineHeight: '24px',
                 }}
               >
-                Wugweb Stays
+                {displayName}
               </p>
               <p
                 style={{
@@ -247,7 +250,7 @@ export function AppTopBar({ currentPage, onNavigate, onToggleSidebar }: AppTopBa
                   lineHeight: '16px',
                 }}
               >
-                super-admin
+                Platform owner
               </p>
             </div>
             {/* Chevron */}
@@ -275,9 +278,9 @@ export function AppTopBar({ currentPage, onNavigate, onToggleSidebar }: AppTopBa
             >
               <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--border)' }}>
                 <p style={{ color: 'var(--foreground)', fontWeight: 'var(--font-weight-medium)' }}>
-                  Wugweb Stays
+                  {displayName}
                 </p>
-                <span style={{ color: 'var(--muted-foreground)' }}>admin@wugweb.com</span>
+                <span style={{ color: 'var(--muted-foreground)' }}>{auth.email}</span>
               </div>
               {[
                 { icon: Settings, label: 'Settings', page: settingsRoute as AppPage | null },
@@ -301,6 +304,7 @@ export function AppTopBar({ currentPage, onNavigate, onToggleSidebar }: AppTopBa
               })}
               <div className="border-t" style={{ borderColor: 'var(--border)' }}>
                 <button
+                  onClick={() => { setUserMenuOpen(false); auth.signOut(); }}
                   className="w-full flex items-center gap-2.5 px-4 py-2.5 text-left"
                   style={{ color: 'var(--destructive)' }}
                 >

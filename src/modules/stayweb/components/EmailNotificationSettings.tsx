@@ -307,7 +307,7 @@ async function apiFetch(path: string, options: RequestInit = {}) {
   const token = await getAuthToken();
   if (!token) throw new Error('Not authenticated');
   const res = await fetch(
-    `https://${projectId}.supabase.co/functions/v1/make-server-ead79e26${path}`,
+    `https://${projectId}.supabase.co/functions/v1/stayweb-api${path}`,
     {
       ...options,
       headers: {
