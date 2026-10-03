@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { sharedSessionStorage, SHARED_STORAGE_KEY } from '../../../shell/auth/sharedSession';
 import { Database, Search, Plus, Trash2, Edit, RefreshCw, Eye, Copy, AlertCircle, Filter, Upload, Download, XCircle } from 'lucide-react';
 import { notifySuccess, notifyError } from '../utils/notify';
 import { copyToClipboard } from '../utils/clipboard';
@@ -20,8 +21,7 @@ interface KVRecord {
 // Resilient fetch that reads auth from localStorage (same as SuperAdmin)
 function getStoredAuthToken(): string | null {
   try {
-    const storageKey = `sb-${projectId}-auth-token`;
-    const raw = localStorage.getItem(storageKey);
+    const raw = sharedSessionStorage.getItem(SHARED_STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     const accessToken = parsed?.access_token;

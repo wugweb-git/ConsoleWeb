@@ -1,5 +1,6 @@
 // TODO: replace with Stayweb admin API
 import { createClient } from '@supabase/supabase-js';
+import { sharedAuthOptions } from '../../../../shell/auth/sharedSession';
 import { lazy } from '../../../../shell/lazy';
 import { projectId, publicAnonKey } from './info';
 
@@ -53,12 +54,8 @@ async function inMemoryLock<R>(
 // Created on first use (shell/lazy), so importing Stayweb never connects or throws.
 export const supabase = lazy(() => {
   const client = createClient(`https://${projectId}.supabase.co`, publicAnonKey, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-      lock: inMemoryLock,
-    }
+    // Session shared with every Wugweb product on .wugweb.studio (see sharedSession.ts).
+    auth: { ...sharedAuthOptions, lock: inMemoryLock }
   });
   prewarmServer();
   return client;

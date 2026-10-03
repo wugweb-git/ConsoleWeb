@@ -1,5 +1,6 @@
 // TODO: replace with Stayweb admin API
 import { supabase } from '../../utils/supabase/client';
+import { sharedSessionStorage, SHARED_STORAGE_KEY } from '../../../../shell/auth/sharedSession';
 import { projectId } from '../../utils/supabase/info';
 import { toast } from 'sonner@2.0.3';
 
@@ -13,8 +14,7 @@ export interface ApiError {
 // ─── Fallback: read token from localStorage when supabase.auth throws ───
 function getStoredToken(): string | null {
   try {
-    const storageKey = `sb-${projectId}-auth-token`;
-    const raw = localStorage.getItem(storageKey);
+    const raw = sharedSessionStorage.getItem(SHARED_STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     const accessToken = parsed?.access_token;

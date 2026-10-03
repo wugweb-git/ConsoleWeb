@@ -9,6 +9,7 @@
 // ============================================================================
 
 import { createClient } from '@supabase/supabase-js';
+import { sharedAuthOptions } from './sharedSession';
 
 export const platformProjectId = import.meta.env.VITE_SUPABASE_PROJECT_ID ?? '';
 export const platformPublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? '';
@@ -16,8 +17,9 @@ export const platformPublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_
 export const supabase = createClient(
   `https://${platformProjectId || 'not-configured'}.supabase.co`,
   platformPublishableKey || 'not-configured',
-  // Default storage key (sb-<project>-auth-token), so the Stayweb module's own client sees the same session.
-  { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } },
+  // Session shared with every Wugweb product on .wugweb.studio (see sharedSession.ts);
+  // the Stayweb module's client uses the same store, so it sees the same session.
+  { auth: sharedAuthOptions },
 );
 
 export const core = () => supabase.schema('core');
