@@ -1,0 +1,53 @@
+/* ThinkWeb design tokens, converted from ThinkWeb src/index.css (HSL triplets -> colors)
+   and scoped to ThinkWeb screens and their portals. Light theme only. Generated. */
+.thinkweb-scope, body.thinkweb-portals > :not(#root) {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(0 0% 9%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(0 0% 9%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(0 0% 9%);
+  --primary: hsl(212 100% 47%);
+  --primary-foreground: hsl(0 0% 100%);
+  --primary-hover: hsl(212 100% 42%);
+  --primary-light: hsl(212 100% 95%);
+  --secondary: hsl(0 0% 96%);
+  --secondary-foreground: hsl(0 0% 45%);
+  --secondary-hover: hsl(0 0% 92%);
+  --muted: hsl(0 0% 96%);
+  --muted-foreground: hsl(0 0% 45%);
+  --muted-hover: hsl(0 0% 92%);
+  --accent: hsl(0 0% 96%);
+  --accent-foreground: hsl(0 0% 9%);
+  --accent-hover: hsl(0 0% 92%);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --success: hsl(142 76% 36%);
+  --success-foreground: hsl(0 0% 100%);
+  --warning: hsl(38 92% 50%);
+  --warning-foreground: hsl(0 0% 100%);
+  --border: hsl(0 0% 90%);
+  --border-light: hsl(0 0% 95%);
+  --input: hsl(0 0% 90%);
+  --input-focus: hsl(212 100% 47%);
+  --ring: hsl(212 100% 47%);
+  --sidebar-background: hsl(0 0% 98%);
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(0 0% 25%);
+  --sidebar-primary: hsl(212 100% 47%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(0 0% 96%);
+  --sidebar-accent-foreground: hsl(0 0% 9%);
+  --sidebar-border: hsl(0 0% 90%);
+  --sidebar-ring: hsl(212 100% 47%);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --radius: 0.5rem;
+  border-color: var(--border);
+}
+.thinkweb-scope, body.thinkweb-portals > :not(#root) { background-color: var(--background); color: var(--foreground); font-feature-settings: "rlig" 1, "calt" 1; -webkit-font-smoothing: antialiased; }
+:is(.thinkweb-scope, body.thinkweb-portals > :not(#root)) * { border-color: var(--border); transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+:is(.thinkweb-scope, body.thinkweb-portals > :not(#root)) :is(h1, h2, h3, h4, h5, h6) { font-weight: 600; letter-spacing: -0.025em; }
+

@@ -3,10 +3,10 @@ import { loadManifests } from '../shell/loadManifests';
 
 // Registered products, one line each. Adding a product = add its folder + one line here.
 const registered: string[] = [
-  '_example',
   'docweb',
   'stayweb',
   'hrweb',
+  'thinkweb',
 ];
 
 export const modules: ModuleManifest[] = loadManifests(
