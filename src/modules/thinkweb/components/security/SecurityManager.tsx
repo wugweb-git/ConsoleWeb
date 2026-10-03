@@ -21,7 +21,6 @@ import {
 import { useToast } from '../../hooks/use-toast';
 
 interface SecuritySettings {
-  twoFactorAuth: boolean;
   sessionTimeout: boolean;
   ipWhitelist: boolean;
   auditLogging: boolean;
@@ -40,7 +39,6 @@ interface SecurityThreat {
 
 const SecurityManager = () => {
   const [settings, setSettings] = useState<SecuritySettings>({
-    twoFactorAuth: true,
     sessionTimeout: true,
     ipWhitelist: false,
     auditLogging: true,
@@ -215,19 +213,6 @@ const SecurityManager = () => {
               <CardTitle>Security Configuration</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label className="text-base font-medium">Two-Factor Authentication</Label>
-                  <div className="text-sm text-gray-500">
-                    Require additional verification for user logins
-                  </div>
-                </div>
-                <Switch
-                  checked={settings.twoFactorAuth}
-                  onCheckedChange={(value) => handleSettingChange('twoFactorAuth', value)}
-                />
-              </div>
-              
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label className="text-base font-medium">Session Timeout</Label>
