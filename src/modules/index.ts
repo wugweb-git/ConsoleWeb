@@ -6,6 +6,7 @@ const registered: string[] = [
   '_example',
   'docweb',
   'stayweb',
+  'hrweb',
 ];
 
 export const modules: ModuleManifest[] = loadManifests(
